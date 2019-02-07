@@ -1,0 +1,86 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="8dp"
+    android:paddingLeft="8dp"
+    android:paddingBottom="8dp"
+    android:paddingRight="8dp"
+    android:layout_centerHorizontal="true">
+
+    <ImageView
+        android:id="@+id/poster_grid"
+        android:layout_width="108dp"
+        android:layout_height="164dp"
+        android:contentDescription="@string/poster_content_description" />
+
+    <TextView
+        android:id="@+id/movie_title"
+        android:layout_width="108dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/title_place_holder"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:paddingBottom="8dp"
+        android:maxLines="2"
+        android:ellipsize="end"/>
+
+
+    <TextView
+        android:id="@+id/release_date_string"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="@string/release_date_string"
+        android:textColor="@android:color/black"
+        android:textSize="15sp"/>
+
+    <TextView
+        android:id="@+id/release_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+
+        android:visibility="gone"
+        android:text="@string/release_date_place_holder"
+        android:textColor="@android:color/black"
+        android:textSize="20sp" />
+
+
+    <TextView
+        android:id="@+id/rating_string"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="@string/rating_string"
+        android:textColor="@android:color/black"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/vote_average"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="@string/vote_average_place_holder"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"/>
+
+
+
+    <TextView
+        android:id="@+id/plot_synopsis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:visibility="gone"
+        android:padding="0dp"
+        android:text="@string/plot_synopsis_palce_holder"
+        android:textColor="@android:color/black"
+        android:textSize="20sp" />
+
+</LinearLayout>

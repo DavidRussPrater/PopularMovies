@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">Popular Movies</string>
+
+    <string name="title_place_holder">Interstellar</string>
+
+    <string name="release_date_place_holder">October 26th, 2014</string>
+    
+    <string name="vote_average_place_holder">8.6/10</string>
+
+    <string name="plot_synopsis_palce_holder">In Earth\'s future, a global crop blight and second Dust
+        Bowl are slowly rendering the planet uninhabitable. Professor Brand (Michael Caine), a
+        brilliant NASA physicist, is working on plans to save mankind by transporting Earth\'s
+        population to a new home via a wormhole. But first, Brand must send former NASA pilot Cooper
+        (Matthew McConaughey) and a team of researchers through the wormhole and across the galaxy
+        to find out which of three planets could be mankind\'s new home.</string>
+    <string name="poster_content_description">This is the poster for the selected movie</string>
+
+    <string name="release_date_string">Release Date</string>
+
+    <string name="rating_string">Rating</string>
+    
+    <string name="sort_by">Sort By</string>
+    
+    <string name="most_popular">Most Popular</string>
+    
+    <string name="top_rated">Top Rated</string>
+
+    <string name="settings_menu_item">Settings</string>
+    <string name="settings_title">Movies Settings</string>
+
+    <!-- Strings for the "Order by" preferences -->
+
+    <string name="settings_order_by_label">Order by</string>
+    <string name="settings_order_by_key" translatable="false">orderBy</string>
+    <string name="settings_order_by_default" translatable="false">popularity.desc</string>
+
+    <string name="settings_order_by_most_popular_label">Most Popular</string>
+    <string name="settings_order_by_most_popular_value">popularity.desc</string>
+
+    <string name="settings_order_by_top_rated_label">Top Rated</string>
+    <string name="settings_order_by_top_rated_value">vote_average.desc</string>
+
+    <string name="settings_order_by_newest_label">Release Date</string>
+    <string name="settings_order_by_newest_value">release_date.desc</string>
+
+    <string name="no_internet_connection">No Internet Connection</string>
+    <string name="no_movies">No Movies Found</string>
+
+
+</resources>
