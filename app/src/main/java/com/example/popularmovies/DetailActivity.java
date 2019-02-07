@@ -37,7 +37,7 @@ public class DetailActivity extends AppCompatActivity {
             movieTitleTextView.setText(detailsArray[0]);
             if (detailsArray[0] != "null") {
 
-                String picassoPosterImage = "http://image.tmdb.org/t/p/w185/" + detailsArray[1];
+                String picassoPosterImage = "http://image.tmdb.org/t/p/w500/" + detailsArray[1];
                 Picasso.get().load(picassoPosterImage).into(moviePosterImageView);
             } else {
                 moviePosterImageView.setImageResource(R.drawable.posetplaceholder);
