@@ -18,7 +18,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QueryUtils {
+class QueryUtils {
 
     private static final String LOG_TAG = QueryUtils.class.getSimpleName();
 
@@ -131,7 +131,7 @@ public class QueryUtils {
             return null;
         }
 
-        // Create an empty ArrayList that we can start adding news stories to
+        // Create an empty ArrayList that we can start adding movies to
         List<Movie> movies = new ArrayList<>();
 
         // Try to parse the JSON response string. If there's a problem with the way the JSON
@@ -142,7 +142,7 @@ public class QueryUtils {
             JSONObject jsonStringObject = new JSONObject(movieJSON);
 
             // Extract the JSONArray associated with the key called "results",
-            // which represents a list of news stories.
+            // which represents a list of movies.
             JSONArray movieArray = jsonStringObject.getJSONArray("results");
 
             // For each movie in the movieArray, create an Movie object
@@ -151,22 +151,23 @@ public class QueryUtils {
                 // Get a single movie at position i within the list of news stories
                 JSONObject currentMovie = movieArray.getJSONObject(i);
 
-                // Extract the value for the key called "webTitle"
+                // Extract the value for the key called "poster_path"
                 String moviePosterImage = currentMovie.getString("poster_path");
 
-                // Extract the value for the key called "webTitle"
+                // Extract the value for the key called "title"
                 String movieTitle = currentMovie.getString("title");
 
-                // Extract the value for the key called "webTitle"
+                // Extract the value for the key called "release_date"
                 String movieReleaseDate = currentMovie.getString("release_date");
 
-                // Extract the value for the key called "webTitle"
+                // Extract the value for the key called "vote_average"
                 String movieVoteAverage = currentMovie.getString("vote_average");
 
+                // Extract the value for the key called "overview"
                 String moviePlotSynopsis = currentMovie.getString("overview");
 
-                // Create a new Movie object with the title, section name, date,
-                // and url from the JSON response.
+                // Create a new Movie object with the title, poster image, release date, vote average
+                // and and plot synopsis from the JSON response.
                 Movie movie = new Movie(moviePosterImage, movieTitle, movieReleaseDate, movieVoteAverage, moviePlotSynopsis);
 
                 // Add the new Movie to the list of movie.

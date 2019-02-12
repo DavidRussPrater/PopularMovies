@@ -25,6 +25,7 @@ public class SettingsActivity extends AppCompatActivity{
             addPreferencesFromResource(R.xml.settings_main);
 
 
+            // Create a setting to set the ordering of the movies
             Preference subject = findPreference(getString(R.string.settings_order_by_key));
             bindPreferenceSummaryToValue(subject);
 

@@ -5,10 +5,12 @@ import android.content.AsyncTaskLoader;
 
 import java.util.List;
 
-public class MovieLoader extends AsyncTaskLoader<List<Movie>> {
+class MovieLoader extends AsyncTaskLoader<List<Movie>> {
 
-    private String mUrl;
+    // Query the URL
+    private final String mUrl;
 
+    // Construct a new {@Link MovieLoader}
     public MovieLoader(Context context, String url) {
         super(context);
         mUrl = url;

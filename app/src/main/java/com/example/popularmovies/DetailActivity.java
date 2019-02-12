@@ -1,6 +1,5 @@
 package com.example.popularmovies;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -8,45 +7,48 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.Objects;
+
 public class DetailActivity extends AppCompatActivity {
 
-    ImageView moviePosterImageView;
-    TextView movieTitleTextView;
-    TextView movieReleaseDateTextView;
-    TextView movieVoteAverageTextView;
-    TextView moviePlotSynopsisTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        moviePosterImageView = findViewById(R.id.movie_poster);
-        movieTitleTextView = findViewById(R.id.movie_title);
-        movieReleaseDateTextView = findViewById(R.id.release_date);
-        movieVoteAverageTextView = findViewById(R.id.vote_average);
-        moviePlotSynopsisTextView = findViewById(R.id.plot_synopsis);
+        // Find the image and text views in the detail_activity and set them to their corresponding
+        // variables
 
-        Intent intentToStartActivity = getIntent();
+        ImageView moviePosterImageView = findViewById(R.id.movie_poster);
+        TextView movieTitleTextView = findViewById(R.id.movie_title);
+        TextView movieReleaseDateTextView = findViewById(R.id.release_date);
+        TextView movieVoteAverageTextView = findViewById(R.id.vote_average);
+        TextView moviePlotSynopsisTextView = findViewById(R.id.plot_synopsis);
 
+        // Pass in the array of strings using the intent from tha MainActivity and set its values to
+        // the corresponding text and image view variables
         Bundle extras = getIntent().getExtras();
-        String[] detailsArray = extras.getStringArray("details");
 
-        //if(intentToStartActivity.hasExtra(Intent.EXTRA_TEXT)){
+        String[] detailsArray = Objects.requireNonNull(extras).getStringArray("details");
 
+        if (detailsArray != null){
             movieTitleTextView.setText(detailsArray[0]);
-            if (detailsArray[0] != "null") {
+        }
 
-                String picassoPosterImage = "http://image.tmdb.org/t/p/w500/" + detailsArray[1];
-                Picasso.get().load(picassoPosterImage).into(moviePosterImageView);
-            } else {
-                moviePosterImageView.setImageResource(R.drawable.posetplaceholder);
-            }
-            movieReleaseDateTextView.setText(detailsArray[2]);
-            movieVoteAverageTextView.setText(detailsArray[3]);
-            moviePlotSynopsisTextView.setText(detailsArray[4]);
+        // This if statement checks if there is a poster image for the current movie. If the
+        // response returns null set it to the posterimageplaceholder.png else set it to the
+        // correct image provided.
+        
+        String picassoPosterImage = "http://image.tmdb.org/t/p/w342/" + Objects.requireNonNull(detailsArray)[1];
+        Picasso.get().load(picassoPosterImage)
+                .error(R.drawable.posterimageplaceholder)
+                .into(moviePosterImageView);
 
-        //}
+
+        movieReleaseDateTextView.setText(detailsArray[2]);
+        movieVoteAverageTextView.setText(detailsArray[3]);
+        moviePlotSynopsisTextView.setText(detailsArray[4]);
 
     }
 

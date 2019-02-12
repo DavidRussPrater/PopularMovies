@@ -20,21 +20,18 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
-
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Movie>> {
 
-    private static final String LOG_TAG = MainActivity.class.getName();
+    private static final String API_KEY = BuildConfig.API_KEY;
 
     private static final int MOVIE_LOADER_ID = 1;
-    /**
-     * URL to fetch data about planetary geology news movies from the Guardian
-     */
-
-    private static final String TMDb_URL =
-            "http://api.themoviedb.org/3/discover/movie?";
 
     // Initialize and empty TextView for when there is no network connection
     private TextView mEmptyStateTextView;
@@ -42,15 +39,26 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     // Initialize an movieAdapter
     private MovieAdapter mAdapter;
 
+    // Initialize a new Date variable to the current date to be used to show movies recently released
+    private final Date mDate = new Date();
+    private final String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.US).format(mDate);
+
+    //Format the current date by adding one year to that way the user can view a list up movies to be released
+    private final String yearDate = (currentDate.substring(0,4));
+    private final int yearInt = Integer.parseInt(yearDate) + 1;
+    private final String formattedDateForNewReleases = Integer.toString(yearInt);
+    private final String finalFormattedDate = currentDate.replace(yearDate, formattedDateForNewReleases);
+
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Find the {@link ListView} object in the view hierarchy of the {@link Activity}.
-        // There should be a {@link ListView} with the view ID called list, which is declared in the
-        // tour_list.xml layout file.
+        // Find the {@link GridView} object in the view hierarchy of the {@link Activity}.
+        // There should be a {@link GridView} with the view ID called grid, which is declared in the
+        // activity_main.xml layout file.
         GridView gridView =  findViewById(R.id.grid);
 
         // Link mEmptyStateTextView to the corresponding xml text view
@@ -59,8 +67,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         mAdapter = new MovieAdapter(this, new ArrayList<Movie>());
 
-        // Make the {@link ListView} use the {@link TourAdapter} we created above, so that the
-        // {@link ListView} will display list items for each {@link Tour} in the list
+        // Make the {@link GridView} use the {@link MovieAdapter} created above, so that the
+        // {@link GridView} will display list items for each {@link Movie} in the grid
         gridView.setAdapter(mAdapter);
 
 
@@ -70,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 // Find the current movie that was clicked
                 Movie currentMovie = mAdapter.getItem(position);
 
-                String movieTitle = currentMovie.getMovieTitle();
+                String movieTitle = Objects.requireNonNull(currentMovie).getMovieTitle();
                 String moviePoster = currentMovie.getPosterImage();
                 String movieReleaseDate = currentMovie.getReleaseDate();
                 String movieVoteAverage = currentMovie.getVoteAverage();
@@ -94,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
         // Get details on the currently active default data network
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        NetworkInfo networkInfo = Objects.requireNonNull(connectivityManager).getActiveNetworkInfo();
 
         // If there is a network connection, fetch data
         if (networkInfo != null && networkInfo.isConnected()) {
@@ -127,19 +135,29 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         String orderBy = sharedPrefs.getString(getString(R.string.settings_order_by_key), getString(R.string.settings_order_by_default));
 
         // parse breaks apart the URI string that's passed into its parameter
-        Uri baseUri = Uri.parse(TMDb_URL);
+        Uri baseUri = Uri.parse(getString(R.string.tmdb_base_url));
 
         // buildUpon prepares the baseUri that we just parsed so we can add query parameters to it
         Uri.Builder uriBuilder = baseUri.buildUpon();
 
-        uriBuilder.appendQueryParameter("sort_by", orderBy);
-        uriBuilder.appendQueryParameter("primary_release_date.lte", "2020-1-1");
-        uriBuilder.appendQueryParameter("api_key", "###");
-        uriBuilder.appendQueryParameter("language", "en-US");
-        uriBuilder.appendQueryParameter("page", "1");
+        uriBuilder.appendQueryParameter("api_key", API_KEY);
+        uriBuilder.appendQueryParameter("region", "US");
         uriBuilder.appendQueryParameter("with_original_language", "en");
-        uriBuilder.appendQueryParameter("vote_count.gte", "100");
 
+        if (orderBy.equals(getString(R.string.settings_order_by_newest_release_value_descending))){
+            uriBuilder.appendQueryParameter("sort_by", orderBy);
+            uriBuilder.appendQueryParameter("primary_release_date.lte", currentDate);
+            uriBuilder.appendQueryParameter("vote_count.gte", "100");
+        } else if (orderBy.equals(getString(R.string.settings_order_by_upcoming_releases_value_ascending))) {
+            uriBuilder.appendQueryParameter("sort_by", orderBy);
+            uriBuilder.appendQueryParameter("primary_release_date.lte", finalFormattedDate);
+            uriBuilder.appendQueryParameter("primary_release_date.gte", currentDate);
+        } else {
+            uriBuilder.appendQueryParameter("sort_by", orderBy);
+            uriBuilder.appendQueryParameter("page", "1");
+            //Set vote count to a hundred to various movies with distorted ratings
+            uriBuilder.appendQueryParameter("vote_count.gte", "200");
+        }
 
         String URIcheck = uriBuilder.toString();
         Log.i("URI String", URIcheck);
