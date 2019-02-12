@@ -2,22 +2,15 @@
 <resources>
 
     <string-array name="settings_order_by_labels">
-        <item>@string/settings_order_by_newest_release_label_descending</item>
-        <item>@string/settings_order_by_upcoming_releases_label_ascending</item>
-        <item>@string/settings_order_by_most_popular_label_descending</item>
-        <item>@string/settings_order_by_most_popular_label_ascending</item>
-        <item>@string/settings_order_by_top_rated_label_descending</item>
-        <item>@string/settings_order_by_top_rated_label_ascending</item>
-
+        <item>@string/settings_order_by_most_popular_label</item>
+        <item>@string/settings_order_by_top_rated_label</item>
+        <item>@string/settings_order_by_newest_label</item>
     </string-array>
 
     <string-array name="settings_order_by_values">
-        <item>@string/settings_order_by_newest_release_value_descending</item>
-        <item>@string/settings_order_by_upcoming_releases_value_ascending</item>
-        <item>@string/settings_order_by_most_popular_value_descending</item>
-        <item>@string/settings_order_by_most_popular_value_ascending</item>
-        <item>@string/settings_order_by_top_rated_value_descending</item>
-        <item>@string/settings_order_by_top_rated_value_ascending</item>
+        <item>@string/settings_order_by_most_popular_value</item>
+        <item>@string/settings_order_by_top_rated_value</item>
+        <item>@string/settings_order_by_newest_value</item>
     </string-array>
 
 </resources>

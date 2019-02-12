@@ -1,7 +1,6 @@
 package com.example.popularmovies;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +11,8 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
-class MovieAdapter extends ArrayAdapter<Movie>{
+public class MovieAdapter extends ArrayAdapter<Movie>{
 
 
     /**
@@ -28,32 +26,42 @@ class MovieAdapter extends ArrayAdapter<Movie>{
     }
 
     @Override
-    @NonNull
-    public  View getView(int position, View convertView, @NonNull ViewGroup parent) {
+    public  View getView(int position, View convertView, ViewGroup parent) {
         View gridView = convertView;
         if (gridView == null) {
             gridView = LayoutInflater.from(getContext()).inflate(
                     R.layout.grid_item, parent, false);
         }
-        // Get the current position in the MovieAdapter
+
         Movie currentMovie = getItem(position);
 
-        // Find the ImageView for the movie poster in the grid view and set it to the posterImageView
-        // variable
         ImageView posterImageView = gridView.findViewById(R.id.poster_grid);
-        String posterMovieString = Objects.requireNonNull(currentMovie).getPosterImage();
 
-        // This if statement checks if there is a poster image for the current movie. If the
-        // response returns null set it to the posterimageplaceholder.png else set it to the
-        // correct image provided.
-        String picassoPosterImage = "http://image.tmdb.org/t/p/w342/" + posterMovieString;
-        Picasso.get().load(picassoPosterImage)
-                .error(R.drawable.posterimageplaceholder)
-                .into(posterImageView);
+        String posterMovieString = currentMovie.getPosterImage();
 
-        // Find the TextView for the movie title and set it to the current movies title
+        if (posterMovieString != "null") {
+            String picassoPosterImage = "http://image.tmdb.org/t/p/w185/" + posterMovieString;
+            Picasso.get().load(picassoPosterImage).into(posterImageView);
+        } else {
+            posterImageView.setImageResource(R.drawable.posetplaceholder);
+        }
+
+
         TextView titleTextView = gridView.findViewById(R.id.movie_title);
+
         titleTextView.setText(currentMovie.getMovieTitle());
+
+        TextView releaseDateTextView = gridView.findViewById(R.id.release_date);
+
+        releaseDateTextView.setText(currentMovie.getReleaseDate());
+
+        TextView voteAverageTextView = gridView.findViewById(R.id.vote_average);
+
+        voteAverageTextView.setText(currentMovie.getVoteAverage());
+
+        TextView plotSynopsisTextView = gridView.findViewById(R.id.plot_synopsis);
+
+        plotSynopsisTextView.setText(currentMovie.getPlotSynopsis());
 
         return gridView;
     }
