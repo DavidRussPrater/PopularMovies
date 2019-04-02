@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Movie>> {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Movie>>, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String API_KEY = BuildConfig.API_KEY;
 
@@ -125,6 +125,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }
 
 
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+
     }
 
     @Override
@@ -215,4 +219,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+
+        LoaderManager loaderManager = getLoaderManager();
+        loaderManager.restartLoader(MOVIE_LOADER_ID, null, this);
+
+    }
 }
